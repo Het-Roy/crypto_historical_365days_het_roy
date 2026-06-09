@@ -170,3 +170,10 @@ exports.getSystemVersion = (req, res) => {
 exports.getSystemConfig = (req, res) => {
   res.json({ config: { somePublicConfig: true } });
 };
+
+exports.generateReport = async (req, res, next) => {
+  try {
+    const { params } = req.body;
+    res.json({ message: "Report generated", data: {} });
+  } catch (err) { next(err); }
+};

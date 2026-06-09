@@ -66,6 +66,7 @@ router.get("/compare/:coin1/:coin2/:coin3", coinsController.compareThree);
 router.get("/price/:coinId", coinsController.getPrice);
 router.get("/history/:coinId/:month", coinsController.getHistoryMonth);
 router.get("/history/:coinId", coinsController.getHistory);
+router.head("/history/:coinId", coinsController.getHistory);
 
 // List and CRUD
 router.get("/", coinsController.list);

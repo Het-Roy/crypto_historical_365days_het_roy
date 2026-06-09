@@ -9,6 +9,7 @@ router.post("/register", authController.register);
 router.post("/login", authController.login);
 router.post("/logout", authMiddleware, authController.logout);
 router.get("/profile", authMiddleware, authController.getProfile);
+router.head("/profile", authMiddleware, authController.getProfile);
 router.patch("/profile", authMiddleware, authController.updateProfile);
 router.delete("/profile", authMiddleware, authController.deleteProfile);
 router.post("/forgot-password", authController.forgotPassword);

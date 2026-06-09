@@ -12,6 +12,7 @@ const authRoutes = require("./routes/auth");
 const jwtRoutes = require("./routes/jwt");
 const adminRoutes = require("./routes/admin");
 const middlewareRoutes = require("./routes/middleware");
+const protectedRoutes = require("./routes/protected");
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use("/auth", authRoutes);
 app.use("/jwt", jwtRoutes);
 app.use("/admin", adminRoutes);
 app.use("/middleware", middlewareRoutes);
+app.use("/protected", protectedRoutes);
 
 // Mount advanced routes before standard coin routes to prevent /coins/:id overriding
 app.use("/coins", advancedRoutes);

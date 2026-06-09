@@ -14,4 +14,10 @@ router.get("/volatility/high", analyticsController.getHighVolatility);
 router.get("/price/history/:coinId", analyticsController.getPriceHistory);
 router.get("/price/trend", analyticsController.getPriceTrend);
 
+router.get("/volume/highest", analyticsController.getHighestVolume);
+router.get("/volume/lowest", analyticsController.getLowestVolume);
+router.get("/volume/average", analyticsController.getAverageVolume);
+router.get("/returns/top", analyticsController.getTopReturns);
+router.get("/returns/negative", analyticsController.getNegativeReturns);
+
 module.exports = router;

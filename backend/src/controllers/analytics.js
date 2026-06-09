@@ -118,3 +118,66 @@ exports.getPriceTrend = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getHighestVolume = async (req, res, next) => {
+  try {
+    const data = await Coin.aggregate([
+      { $match: { volume: { $ne: null } } },
+      { $sort: { volume: -1 } },
+      { $limit: 1 }
+    ]);
+    res.json({ data: data[0] });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getLowestVolume = async (req, res, next) => {
+  try {
+    const data = await Coin.aggregate([
+      { $match: { volume: { $ne: null } } },
+      { $sort: { volume: 1 } },
+      { $limit: 1 }
+    ]);
+    res.json({ data: data[0] });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getAverageVolume = async (req, res, next) => {
+  try {
+    const data = await Coin.aggregate([
+      { $match: { volume: { $ne: null } } },
+      { $group: { _id: null, avgVolume: { $avg: "$volume" } } }
+    ]);
+    res.json({ result: data.length ? data[0].avgVolume : 0, label: "Average Volume" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getTopReturns = async (req, res, next) => {
+  try {
+    const data = await Coin.aggregate([
+      { $match: { daily_return: { $ne: null } } },
+      { $sort: { daily_return: -1 } },
+      { $limit: 10 }
+    ]);
+    res.json({ data });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getNegativeReturns = async (req, res, next) => {
+  try {
+    const data = await Coin.aggregate([
+      { $match: { daily_return: { $lt: 0 } } },
+      { $sort: { daily_return: 1 } }
+    ]);
+    res.json({ data });
+  } catch (err) {
+    next(err);
+  }
+};

@@ -4,7 +4,7 @@
 While raw cryptocurrency prices are widely available, developers, analysts, and traders often struggle to extract actionable insights from historical data. Calculating moving averages, assessing market volatility, simulating portfolio allocations, and identifying broader market trends (bullish vs. bearish) usually requires complex, client-side data processing. Furthermore, public APIs often lack robust security, tailored aggregations, or rate-limited access for enterprise use.
 
 ## The Solution
-This project provides a robust, scalable backend API that not only stores comprehensive historical cryptocurrency metrics but also offloads complex calculations to the server. It utilizes advanced database aggregations to deliver ready-to-use analytics, portfolio simulations, and market sentiment alerts, all secured behind role-based JWT authentication and endpoint-specific rate limiting.
+This proje.+ct provides a robust, scalable backend API that not only stores comprehensive historical cryptocurrency metrics but also offloads complex calculations to the server. It utilizes advanced database aggregations to deliver ready-to-use analytics, portfolio simulations, and market sentiment alerts, all secured behind role-based JWT authentication and endpoint-specific rate limiting.
 
 ## Tech Stack
 - **Backend Framework**: Node.js, Express.js (MVC Architecture)

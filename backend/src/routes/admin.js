@@ -9,5 +9,8 @@ router.use(authMiddleware);
 router.use(roleMiddleware("admin"));
 
 router.get("/dashboard", adminController.getDashboard);
+router.get("/coins", adminController.getAdminCoins);
+router.get("/stats", adminController.getAdminStats);
+router.get("/users", adminController.getAdminUsers);
 
 module.exports = router;

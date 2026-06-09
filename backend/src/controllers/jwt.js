@@ -44,3 +44,25 @@ exports.revokeToken = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getProfile = async (req, res, next) => {
+  try {
+    let user = null;
+    if (User && User.findById) {
+        user = await User.findById(req.user._id).select("-password");
+    }
+    res.json({ data: user, message: "JWT protected profile accessed" });
+  } catch (err) { next(err); }
+};
+
+exports.getDashboard = (req, res) => {
+  res.json({ message: "Welcome to JWT protected dashboard", user: req.user });
+};
+
+exports.getAdmin = (req, res) => {
+  res.json({ message: "Welcome to JWT admin route", user: req.user });
+};
+
+exports.getPrivateStats = (req, res) => {
+  res.json({ message: "Private stats accessed", user: req.user });
+};

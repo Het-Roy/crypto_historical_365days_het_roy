@@ -4,6 +4,7 @@ const analyticsController = require("../controllers/analytics");
 const router = express.Router();
 
 router.get("/price/highest", analyticsController.getHighestPrice);
+router.head("/price/highest", analyticsController.getHighestPrice);
 router.get("/price/lowest", analyticsController.getLowestPrice);
 router.get("/price/average", analyticsController.getAveragePrice);
 router.get("/price/growth", analyticsController.getPriceGrowth);

@@ -9,5 +9,6 @@ router.use(authMiddleware);
 router.use(roleMiddleware("admin"));
 
 router.get("/dashboard", adminController.getDashboard);
+router.options("/coins", (req, res) => res.set("Allow", "GET,OPTIONS").status(204).end());
 
 module.exports = router;

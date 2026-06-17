@@ -4,12 +4,7 @@ import { Link } from 'react-router-dom';
 
 const navLinks = [
   "Cryptocurrencies",
-  "Dashboards",
-  "DexScan",
-  "Exchanges",
-  "Community",
-  "API",
-  "Products"
+  "Dashboards"
 ];
 
 function TopNavBar() {

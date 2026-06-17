@@ -1,5 +1,54 @@
 import React from 'react';
 import { ChevronUp, ChevronDown, Info } from 'lucide-react';
+import DataTableRow from './DataTableRow';
+
+const dummyCoins = [
+  {
+    rank: 1,
+    name: "Bitcoin",
+    symbol: "BTC",
+    color: "bg-orange-500",
+    price: 65094.04,
+    percentChange1h: -0.19,
+    percentChange24h: -0.91,
+    percentChange7d: 5.18,
+    marketCap: 1304748267735,
+    volume24h: 23674516167,
+    volumeInCrypto: "363.39K",
+    circulatingSupply: 20040000,
+    maxSupply: 21000000,
+  },
+  {
+    rank: 2,
+    name: "Ethereum",
+    symbol: "ETH",
+    color: "bg-blue-600",
+    price: 3455.36,
+    percentChange1h: -0.63,
+    percentChange24h: -1.48,
+    percentChange7d: 6.96,
+    marketCap: 411844724362,
+    volume24h: 11049640375,
+    volumeInCrypto: "3.2M",
+    circulatingSupply: 120080000,
+    maxSupply: null,
+  },
+  {
+    rank: 3,
+    name: "Tether",
+    symbol: "USDT",
+    color: "bg-teal-500",
+    price: 0.9989,
+    percentChange1h: 0.00,
+    percentChange24h: -0.01,
+    percentChange7d: -0.03,
+    marketCap: 112347559603,
+    volume24h: 58120525349,
+    volumeInCrypto: "58.17B",
+    circulatingSupply: 112347559603,
+    maxSupply: null,
+  }
+];
 
 function DataTable() {
   return (
@@ -62,13 +111,11 @@ function DataTable() {
           </tr>
         </thead>
         
-        {/* Table Body Placeholder (Rows will be added in PR 8) */}
+        {/* Table Body */}
         <tbody>
-          <tr>
-            <td colSpan="10" className="py-12 text-center text-textMuted border-b border-border border-dashed">
-              Rows component will be injected here in the next PR.
-            </td>
-          </tr>
+          {dummyCoins.map((coin) => (
+            <DataTableRow key={coin.symbol} coin={coin} />
+          ))}
         </tbody>
       </table>
     </div>

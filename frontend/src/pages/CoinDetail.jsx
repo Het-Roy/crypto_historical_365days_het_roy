@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import AssetHeader from '../components/AssetHeader';
@@ -6,23 +6,48 @@ import ChartToolbar from '../components/ChartToolbar';
 import MainPriceChart from '../components/MainPriceChart';
 import StatsGrid from '../components/StatsGrid';
 import SocialSidebar from '../components/SocialSidebar';
-
-// Dummy data to match the table
-const dummyCoins = {
-  "btc": {
-    rank: 1, name: "Bitcoin", symbol: "BTC", color: "bg-orange-500", price: 65094.04, percentChange24h: -0.91,
-  },
-  "eth": {
-    rank: 2, name: "Ethereum", symbol: "ETH", color: "bg-blue-600", price: 3455.36, percentChange24h: -1.48,
-  },
-  "usdt": {
-    rank: 3, name: "Tether", symbol: "USDT", color: "bg-teal-500", price: 0.9989, percentChange24h: -0.01,
-  }
-};
+import { fetchCoinById } from '../services/api';
 
 function CoinDetail() {
   const { id } = useParams();
-  const coin = dummyCoins[id?.toLowerCase()] || dummyCoins.btc;
+  const [coin, setCoin] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadCoin = async () => {
+      setLoading(true);
+      const res = await fetchCoinById(id);
+      
+      if (res && res.data) {
+        // Map API response to component shape
+        const c = res.data;
+        setCoin({
+          id: c._id || c.id || c.symbol,
+          rank: c.market_cap_rank || 1,
+          name: c.name,
+          symbol: (c.symbol || '').toUpperCase(),
+          color: "bg-blue-500",
+          price: c.current_price || 0,
+          percentChange24h: c.price_change_percentage_24h || 0,
+          marketCap: c.market_cap || 0,
+          volume24h: c.total_volume || 0,
+          circulatingSupply: c.circulating_supply || 0,
+          maxSupply: c.max_supply || null,
+        });
+      }
+      setLoading(false);
+    };
+    
+    loadCoin();
+  }, [id]);
+
+  if (loading) {
+    return <div className="w-full py-20 text-center text-textMuted animate-pulse">Loading coin details...</div>;
+  }
+
+  if (!coin) {
+    return <div className="w-full py-20 text-center text-textMuted">Coin not found.</div>;
+  }
 
   return (
     <div className="w-full">

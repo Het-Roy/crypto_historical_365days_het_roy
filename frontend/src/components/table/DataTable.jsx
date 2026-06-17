@@ -1,56 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronUp, ChevronDown, Info } from 'lucide-react';
 import DataTableRow from './DataTableRow';
-
-const dummyCoins = [
-  {
-    rank: 1,
-    name: "Bitcoin",
-    symbol: "BTC",
-    color: "bg-orange-500",
-    price: 65094.04,
-    percentChange1h: -0.19,
-    percentChange24h: -0.91,
-    percentChange7d: 5.18,
-    marketCap: 1304748267735,
-    volume24h: 23674516167,
-    volumeInCrypto: "363.39K",
-    circulatingSupply: 20040000,
-    maxSupply: 21000000,
-  },
-  {
-    rank: 2,
-    name: "Ethereum",
-    symbol: "ETH",
-    color: "bg-blue-600",
-    price: 3455.36,
-    percentChange1h: -0.63,
-    percentChange24h: -1.48,
-    percentChange7d: 6.96,
-    marketCap: 411844724362,
-    volume24h: 11049640375,
-    volumeInCrypto: "3.2M",
-    circulatingSupply: 120080000,
-    maxSupply: null,
-  },
-  {
-    rank: 3,
-    name: "Tether",
-    symbol: "USDT",
-    color: "bg-teal-500",
-    price: 0.9989,
-    percentChange1h: 0.00,
-    percentChange24h: -0.01,
-    percentChange7d: -0.03,
-    marketCap: 112347559603,
-    volume24h: 58120525349,
-    volumeInCrypto: "58.17B",
-    circulatingSupply: 112347559603,
-    maxSupply: null,
-  }
-];
+import { fetchAllCoins } from '../../services/api';
 
 function DataTable() {
+  const [coins, setCoins] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      const res = await fetchAllCoins(1, 50);
+      
+      // Map API data to our component's expected shape if necessary
+      // Assuming the backend returns { data: [...] } where each item has coin properties
+      if (res && res.data) {
+        const mappedCoins = res.data.map((c, index) => ({
+          id: c._id || c.id || c.symbol,
+          rank: c.market_cap_rank || index + 1,
+          name: c.name,
+          symbol: (c.symbol || '').toUpperCase(),
+          color: "bg-blue-500", // Fallback color
+          price: c.current_price || 0,
+          percentChange1h: c.price_change_percentage_1h_in_currency || 0,
+          percentChange24h: c.price_change_percentage_24h || 0,
+          percentChange7d: c.price_change_percentage_7d_in_currency || 0,
+          marketCap: c.market_cap || 0,
+          volume24h: c.total_volume || 0,
+          volumeInCrypto: c.current_price ? (c.total_volume / c.current_price).toFixed(2) : "0",
+          circulatingSupply: c.circulating_supply || 0,
+          maxSupply: c.max_supply || null,
+        }));
+        setCoins(mappedCoins);
+      }
+      setLoading(false);
+    };
+    
+    loadData();
+  }, []);
+
   return (
     <div className="w-full overflow-x-auto pb-4">
       <table className="w-full min-w-[1000px] text-sm text-left">
@@ -113,9 +101,23 @@ function DataTable() {
         
         {/* Table Body */}
         <tbody>
-          {dummyCoins.map((coin) => (
-            <DataTableRow key={coin.symbol} coin={coin} />
-          ))}
+          {loading ? (
+            <tr>
+              <td colSpan="10" className="py-12 text-center text-textMuted">
+                <div className="animate-pulse">Loading coins...</div>
+              </td>
+            </tr>
+          ) : coins.length > 0 ? (
+            coins.map((coin) => (
+              <DataTableRow key={coin.id} coin={coin} />
+            ))
+          ) : (
+            <tr>
+              <td colSpan="10" className="py-12 text-center text-textMuted">
+                No coins found or backend is asleep.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

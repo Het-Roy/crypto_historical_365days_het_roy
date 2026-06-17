@@ -4,6 +4,7 @@ import { ChevronRight } from 'lucide-react';
 import AssetHeader from '../components/AssetHeader';
 import ChartToolbar from '../components/ChartToolbar';
 import MainPriceChart from '../components/MainPriceChart';
+import StatsGrid from '../components/StatsGrid';
 
 // Dummy data to match the table
 const dummyCoins = {
@@ -44,9 +45,7 @@ function CoinDetail() {
              <MainPriceChart coin={coin} />
           </div>
 
-          <div className="mt-8 text-textMuted border border-dashed border-border p-8 rounded text-center">
-             StatsGrid will go here
-          </div>
+          <StatsGrid coin={coin} />
         </div>
 
         {/* Right Column (Sidebar) */}

@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import AssetHeader from '../components/AssetHeader';
 import ChartToolbar from '../components/ChartToolbar';
+import MainPriceChart from '../components/MainPriceChart';
+import StatsGrid from '../components/StatsGrid';
 
 // Dummy data to match the table
 const dummyCoins = {
@@ -39,9 +41,11 @@ function CoinDetail() {
           <AssetHeader coin={coin} />
           <ChartToolbar />
           
-          <div className="mt-4 text-textMuted border border-dashed border-border p-8 rounded text-center">
-             MainPriceChart and StatsGrid will go here
+          <div className="mt-4 border border-border rounded-xl p-4 bg-background">
+             <MainPriceChart coin={coin} />
           </div>
+
+          <StatsGrid coin={coin} />
         </div>
 
         {/* Right Column (Sidebar) */}

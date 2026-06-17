@@ -1,13 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TopNavBar from './components/TopNavBar';
+import SecondaryTabBar from './components/SecondaryTabBar';
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
         {/* Top Navigation */}
-        <TopNavBar />
+        <div className="sticky top-0 z-50">
+          <TopNavBar />
+          <SecondaryTabBar />
+        </div>
 
         {/* Main Content Area */}
         <main className="flex-grow container mx-auto px-4 py-6">

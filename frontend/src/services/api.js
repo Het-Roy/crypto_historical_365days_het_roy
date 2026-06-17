@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://crypto-historical-365days-het-roy.onrender.com',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
 });
 
 // Add interceptor for auth token
@@ -43,14 +43,39 @@ export const fetchCoinById = async (id) => {
   }
 };
 
-export const fetchCoinHistory = async (id, days = 7) => {
+export const fetchCoinHistory = async (id, days = 365) => {
   try {
-    // The endpoint might be different depending on exact backend setup, 
-    // but assuming standard /coins/:id/history based on previous discussions.
-    const { data } = await API.get(`/coins/${id}/history?days=${days}`);
+    // Backend route: GET /coins/history/:coinId → returns { data: [...all records sorted asc] }
+    const { data } = await API.get(`/coins/history/${id}`);
+    if (data && data.data) {
+      // Optionally slice to the requested number of days
+      const all = data.data;
+      const sliced = days && days < all.length ? all.slice(-days) : all;
+      return { data: sliced };
+    }
     return data;
   } catch (error) {
-    console.error("Error fetching coin history:", error);
+    console.error('Error fetching coin history:', error);
+    return null;
+  }
+};
+
+export const loginUser = async (email, password) => {
+  const { data } = await API.post('/auth/login', { email, password });
+  return data;
+};
+
+export const registerUser = async (email, password) => {
+  const { data } = await API.post('/auth/register', { email, password });
+  return data;
+};
+
+export const fetchUserProfile = async () => {
+  try {
+    const { data } = await API.get('/auth/profile');
+    return data;
+  } catch (error) {
+    console.error('Error fetching profile:', error);
     return null;
   }
 };

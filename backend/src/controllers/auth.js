@@ -15,7 +15,14 @@ exports.register = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ email, password: hashedPassword, role: role || "user", emailVerificationToken: "dummy-token" });
     
-    res.status(201).json({ message: "User registered successfully", userId: user._id });
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || "default_secret", { expiresIn: '7d' });
+    
+    // Convert to object and remove password
+    const userObj = user.toObject();
+    delete userObj.password;
+    delete userObj.revokedTokens;
+
+    res.status(201).json({ message: "User registered successfully", token, user: userObj });
   } catch (err) {
     next(err);
   }

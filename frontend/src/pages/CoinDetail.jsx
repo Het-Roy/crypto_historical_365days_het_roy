@@ -5,6 +5,7 @@ import AssetHeader from '../components/AssetHeader';
 import ChartToolbar from '../components/ChartToolbar';
 import MainPriceChart from '../components/MainPriceChart';
 import StatsGrid from '../components/StatsGrid';
+import SocialSidebar from '../components/SocialSidebar';
 
 // Dummy data to match the table
 const dummyCoins = {
@@ -50,9 +51,7 @@ function CoinDetail() {
 
         {/* Right Column (Sidebar) */}
         <div className="w-full lg:w-[30%]">
-          <div className="text-textMuted border border-dashed border-border p-8 rounded text-center h-full min-h-[400px]">
-             SocialSidebar will go here
-          </div>
+          <SocialSidebar />
         </div>
         
       </div>

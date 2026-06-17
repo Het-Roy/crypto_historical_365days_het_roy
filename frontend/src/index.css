@@ -1,20 +1,29 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0d1421;
+  --color-card: #162032;
+  --color-border: #233046;
+  --color-textMain: #ffffff;
+  --color-textMuted: #8b96a8;
+  --color-accentBlue: #3861fb;
+  --color-trendUp: #16c784;
+  --color-trendDown: #ea3943;
+}
 
 @layer base {
   body {
-    @apply bg-background text-textMain antialiased;
+    background-color: var(--color-background);
+    color: var(--color-textMain);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-@layer utilities {
-  .no-scrollbar::-webkit-scrollbar {
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
     display: none;
   }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-

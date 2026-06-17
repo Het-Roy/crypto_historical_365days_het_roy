@@ -1,6 +1,7 @@
 import React from 'react';
-import { Search, Star, PieChart, Grid, Menu, UserCircle } from 'lucide-react';
+import { Grid, Menu, UserCircle, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const navLinks = [
   "Cryptocurrencies",
@@ -8,6 +9,8 @@ const navLinks = [
 ];
 
 function TopNavBar() {
+  const { user, logout } = useAuth();
+
   return (
     <header className="bg-background border-b border-border w-full h-[60px] flex items-center px-4 md:px-6 justify-between text-sm">
       
@@ -32,41 +35,42 @@ function TopNavBar() {
       {/* Right Section: Utilities & Auth */}
       <div className="flex items-center gap-4 text-textMain font-semibold">
          
-         {/* Utility Links */}
-         <div className="hidden md:flex items-center gap-4 border-r border-border pr-4 mr-2">
-            <Link to="/portfolio" className="flex items-center gap-1 hover:text-accentBlue transition-colors">
-               <PieChart size={16} className="text-textMuted" />
-               Portfolio
-            </Link>
-            <Link to="/watchlist" className="flex items-center gap-1 hover:text-accentBlue transition-colors">
-               <Star size={16} className="text-textMuted" />
-               Watchlist
-            </Link>
-         </div>
-
-         {/* Search Bar */}
-         <div className="hidden sm:flex items-center bg-card rounded-lg px-3 py-1.5 text-textMuted border border-border hover:border-textMuted transition-colors cursor-text group">
-            <Search size={16} className="mr-2 group-hover:text-textMain transition-colors" />
-            <span className="w-32 lg:w-48 text-left outline-none bg-transparent flex-grow text-xs font-normal">Search</span>
-            <div className="bg-border rounded px-1.5 py-0.5 text-[10px] font-mono font-medium tracking-widest flex items-center shadow-sm">
-               /
-            </div>
-         </div>
-
          {/* Grid Icon */}
          <button className="hidden sm:block hover:text-accentBlue transition-colors">
             <Grid size={18} className="text-textMuted hover:text-textMain" />
          </button>
 
-         {/* Login Button */}
-         <Link to="/login" className="bg-accentBlue hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg transition-colors shadow-sm">
-            Log In
-         </Link>
+         {user ? (
+           <>
+             {/* Logged in state */}
+             <div className="flex items-center gap-2 text-textMuted border-l border-border pl-4 ml-2">
+               <UserCircle size={20} />
+               <span className="hidden md:block truncate max-w-[120px]">{user.email}</span>
+             </div>
+             <button 
+               onClick={logout}
+               className="bg-red-500/10 hover:bg-red-500/20 text-red-500 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1"
+               title="Log Out"
+             >
+               <LogOut size={16} />
+               <span className="hidden sm:block">Log Out</span>
+             </button>
+           </>
+         ) : (
+           <>
+             {/* Logged out state */}
+             <Link to="/login" className="hover:text-accentBlue transition-colors px-2 py-1.5">
+                Log In
+             </Link>
+             <Link to="/register" className="bg-accentBlue hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg transition-colors shadow-sm">
+                Sign Up
+             </Link>
+           </>
+         )}
 
-         {/* Hamburger & Avatar */}
-         <div className="flex items-center gap-2 cursor-pointer hover:text-accentBlue transition-colors">
+         {/* Hamburger */}
+         <div className="flex items-center gap-2 cursor-pointer hover:text-accentBlue transition-colors ml-2">
             <Menu size={20} />
-            <UserCircle size={24} className="text-textMuted" />
          </div>
       </div>
     </header>

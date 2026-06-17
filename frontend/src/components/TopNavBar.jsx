@@ -14,7 +14,7 @@ const navLinks = [
 
 function TopNavBar() {
   return (
-    <header className="sticky top-0 z-50 bg-background border-b border-border w-full h-[60px] flex items-center px-4 md:px-6 justify-between text-sm">
+    <header className="bg-background border-b border-border w-full h-[60px] flex items-center px-4 md:px-6 justify-between text-sm">
       
       {/* Left Section: Logo & Main Nav */}
       <div className="flex items-center gap-6">

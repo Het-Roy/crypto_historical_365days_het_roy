@@ -16,7 +16,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/backend/api/index.js"
+      "destination": "https://crypto-historical-365days-het-roy.onrender.com/$1"
     },
     {
       "source": "/(.*)",

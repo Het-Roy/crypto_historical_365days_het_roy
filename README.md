@@ -6,12 +6,9 @@
 
 **[🌍 Live Demo (Render)](https://crypto-historical-365days-het-roy.onrender.com/coins) | [📝 Postman API Documentation](https://documenter.getpostman.com/view/50839290/2sBXwtqpfE)**
 
-[![Node.js](https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org)
-[![Express](https://img.shields.io/badge/Express-v5-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com)
-[![MongoDB](https://img.shields.io/badge/MongoDB-v7+-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
-[![React](https://img.shields.io/badge/React-v19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
-[![Vite](https://img.shields.io/badge/Vite-v8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+CryptoVault is a full-stack, production-grade cryptocurrency analytics platform designed to track, filter, and visualize historical market data. It mimics premium platforms like CoinMarketCap, presenting market analytics through a sleek, modern dark-themed dashboard.
+
+Rather than relying on mocked or dummy mock data, CryptoVault runs entirely on a real dataset containing over 33,000 historical records across 100 different cryptocurrencies over a 365-day period.
 
 <br />
 

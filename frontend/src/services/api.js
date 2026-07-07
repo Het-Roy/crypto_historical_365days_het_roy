@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
+  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:3000'),
 });
 
 // Add interceptor for auth token
@@ -13,13 +13,14 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const fetchMarketSummary = async () => {
+// Fetch aggregated coin summary (one row per coin with sparkline)
+export const fetchCoinSummary = async () => {
   try {
-    const { data } = await API.get('/stats/market-summary');
+    const { data } = await API.get('/coins/summary');
     return data;
   } catch (error) {
-    console.error("Error fetching market summary:", error);
-    return null;
+    console.error("Error fetching coin summary:", error);
+    return { data: [] };
   }
 };
 
@@ -30,33 +31,6 @@ export const fetchAllCoins = async (page = 1, limit = 50) => {
   } catch (error) {
     console.error("Error fetching coins:", error);
     return { data: [] };
-  }
-};
-
-export const fetchCoinById = async (id) => {
-  try {
-    const { data } = await API.get(`/coins/${id}`);
-    return data;
-  } catch (error) {
-    console.error("Error fetching coin by id:", error);
-    return null;
-  }
-};
-
-export const fetchCoinHistory = async (id, days = 365) => {
-  try {
-    // Backend route: GET /coins/history/:coinId → returns { data: [...all records sorted asc] }
-    const { data } = await API.get(`/coins/history/${id}`);
-    if (data && data.data) {
-      // Optionally slice to the requested number of days
-      const all = data.data;
-      const sliced = days && days < all.length ? all.slice(-days) : all;
-      return { data: sliced };
-    }
-    return data;
-  } catch (error) {
-    console.error('Error fetching coin history:', error);
-    return null;
   }
 };
 

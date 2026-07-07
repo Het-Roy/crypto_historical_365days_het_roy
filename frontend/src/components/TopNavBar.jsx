@@ -3,36 +3,22 @@ import { Grid, Menu, UserCircle, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const navLinks = [
-  "Cryptocurrencies",
-  "Dashboards"
-];
-
 function TopNavBar() {
   const { user, logout } = useAuth();
 
   return (
     <header className="bg-background border-b border-border w-full h-[60px] flex items-center px-4 md:px-6 justify-between text-sm">
       
-      {/* Left Section: Logo & Main Nav */}
+      {/* Left Section: Logo */}
       <div className="flex items-center gap-6">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 text-textMain font-bold text-lg tracking-tight">
            <div className="w-6 h-6 rounded-full bg-accentBlue flex items-center justify-center text-white text-xs">C</div>
-           CoinMarketCap Clone
+           CryptoVault
         </Link>
-        
-        {/* Nav Links (hidden on mobile, visible on lg screens) */}
-        <nav className="hidden lg:flex items-center gap-5 font-semibold text-textMain">
-          {navLinks.map((link) => (
-            <Link key={link} to={`/${link.toLowerCase()}`} className="hover:text-accentBlue transition-colors">
-              {link}
-            </Link>
-          ))}
-        </nav>
       </div>
 
-      {/* Right Section: Utilities & Auth */}
+      {/* Right Section: Auth */}
       <div className="flex items-center gap-4 text-textMain font-semibold">
          
          {/* Grid Icon */}
@@ -67,11 +53,6 @@ function TopNavBar() {
              </Link>
            </>
          )}
-
-         {/* Hamburger */}
-         <div className="flex items-center gap-2 cursor-pointer hover:text-accentBlue transition-colors ml-2">
-            <Menu size={20} />
-         </div>
       </div>
     </header>
   );

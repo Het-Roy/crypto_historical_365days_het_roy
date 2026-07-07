@@ -4,7 +4,7 @@
 
 ### *A Full-Stack Cryptocurrency Analytics Platform*
 
-**[🌍 Live Demo (Render)](https://your-render-app-link.onrender.com) | [📝 Postman API Documentation](https://documenter.getpostman.com/view/your-postman-link)**
+**[🌍 Live Demo (Render)](https://crypto-historical-365days-het-roy.onrender.com) | [📝 Postman API Documentation](https://documenter.getpostman.com/view/50839290/2sBXwtqpfE)**
 
 [![Node.js](https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org)
 [![Express](https://img.shields.io/badge/Express-v5-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com)

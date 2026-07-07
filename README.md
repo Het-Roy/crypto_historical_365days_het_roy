@@ -4,13 +4,14 @@
 
 ### *A Full-Stack Cryptocurrency Analytics Platform*
 
+**[🌍 Live Demo (Render)](https://your-render-app-link.onrender.com) | [📝 Postman API Documentation](https://documenter.getpostman.com/view/your-postman-link)**
+
 [![Node.js](https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org)
 [![Express](https://img.shields.io/badge/Express-v5-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com)
 [![MongoDB](https://img.shields.io/badge/MongoDB-v7+-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
 [![React](https://img.shields.io/badge/React-v19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-v8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![License](https://img.shields.io/badge/License-ISC-blue?style=for-the-badge)](LICENSE)
 
 <br />
 
@@ -18,9 +19,22 @@
 
 <br />
 
----
-
 </div>
+
+## 🚨 The Problem
+Tracking cryptocurrency data often involves either simplistic dashboards lacking deep historical context or overly complex trading terminals that are difficult for regular users to navigate. Furthermore, building a full-stack platform that efficiently processes, filters, and renders tens of thousands of data points (like 365 days of historical data for 100+ coins) usually results in severe client-side performance bottlenecks.
+
+## 💡 The Solution
+**CryptoVault** solves this by leveraging a robust backend pipeline with MongoDB aggregation to process a massive 33,000+ record dataset server-side. It offloads heavy computations (like generating 7-day sparkline charts and computing 24h percentage changes) to the database, ensuring the React frontend remains lightning-fast. The result is a premium, consumer-friendly interface that delivers deep historical analytics without sacrificing performance.
+
+## 🛠️ Tech Stack
+- **Frontend:** React.js (v19), Vite (v8), Tailwind CSS (v4), Lightweight Charts
+- **Backend:** Node.js, Express.js (v5)
+- **Database:** MongoDB, Mongoose (v9)
+- **Authentication:** JSON Web Tokens (JWT), bcrypt
+- **Deployment:** Render (Backend/Frontend), MongoDB Atlas
+
+---
 
 ## 📋 Table of Contents
 

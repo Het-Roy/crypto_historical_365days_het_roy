@@ -6,10 +6,20 @@ const { getDynamicAverage } = require("../utils/aggregations");
 // ── Aggregated summary: one row per coin with latest data + sparkline ──
 exports.getSummary = async (req, res, next) => {
   try {
+    // 1. Get the latest timestamp in the database to dynamic-filter the window
+    const latestRecord = await Coin.findOne().sort({ timestamp: -1 }).select("timestamp");
+    const latestDate = latestRecord ? latestRecord.timestamp : new Date();
+    
+    // 2. Set filter start date to 10 days prior (gives enough room for 7-day sparklines + weekly stats)
+    const startDate = new Date(latestDate);
+    startDate.setDate(startDate.getDate() - 10);
+
     const data = await Coin.aggregate([
-      // Sort all records by timestamp ascending
+      // Match only records within the last 10 days (filters 33k docs to ~1k docs instantly using index)
+      { $match: { timestamp: { $gte: startDate } } },
+      // Sort the subset of records by timestamp ascending
       { $sort: { timestamp: 1 } },
-      // Group by coin_id
+      // Group by coin_id to aggregate latest data per coin
       {
         $group: {
           _id: "$coin_id",
@@ -21,7 +31,7 @@ exports.getSummary = async (req, res, next) => {
           volume:          { $last: "$volume" },
           daily_return:    { $last: "$daily_return" },
           volatility_7d:   { $last: "$volatility_7d" },
-          // Collect last 7 prices for sparkline
+          // Collect prices for sparkline
           allPrices:       { $push: "$price" },
           allTimestamps:   { $push: "$timestamp" },
           totalRecords:    { $sum: 1 },

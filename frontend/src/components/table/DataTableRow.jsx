@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import SparklineCell from './SparklineCell';
 
@@ -49,9 +48,7 @@ function DataTableRow({ coin }) {
             {coin.symbol[0]}
           </div>
           <div className="flex items-center gap-2">
-            <Link to={`/coins/${coin.id}`} className="font-bold text-textMain hover:text-accentBlue transition-colors">
-              {coin.name}
-            </Link>
+            <span className="font-bold text-textMain">{coin.name}</span>
             <span className="text-xs font-semibold text-textMuted bg-card px-1.5 py-0.5 rounded">{coin.symbol}</span>
             <button className="opacity-0 group-hover:opacity-100 transition-opacity bg-transparent border border-accentBlue text-accentBlue px-2 py-0.5 rounded-full text-xs font-semibold ml-2 hover:bg-accentBlue hover:text-white">
               Buy

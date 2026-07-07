@@ -14,18 +14,27 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const initAuth = async () => {
       if (token) {
-        const profile = await fetchUserProfile();
-        if (profile && profile.data) {
-          setUser(profile.data);
-        } else {
-          // Token might be invalid
-          logout();
+        try {
+          const profile = await fetchUserProfile();
+          if (profile && profile.data) {
+            setUser(profile.data);
+          } else {
+            // Token is invalid, silently clear it
+            localStorage.removeItem('token');
+            setToken(null);
+            setUser(null);
+          }
+        } catch {
+          // Token is invalid, silently clear it
+          localStorage.removeItem('token');
+          setToken(null);
+          setUser(null);
         }
       }
       setLoading(false);
     };
     initAuth();
-  }, [token]);
+  }, []); // Only run once on mount, not on every token change
 
   const login = async (email, password) => {
     const response = await loginUser(email, password);

@@ -3,6 +3,67 @@ const { getPaginationParams, getPaginationResponse } = require("../utils/paginat
 const { getSortObject, sortMap } = require("../utils/sortMapper");
 const { getDynamicAverage } = require("../utils/aggregations");
 
+// ── Aggregated summary: one row per coin with latest data + sparkline ──
+exports.getSummary = async (req, res, next) => {
+  try {
+    const data = await Coin.aggregate([
+      // Sort all records by timestamp ascending
+      { $sort: { timestamp: 1 } },
+      // Group by coin_id
+      {
+        $group: {
+          _id: "$coin_id",
+          coin_name:       { $last: "$coin_name" },
+          symbol:          { $last: "$symbol" },
+          market_cap_rank: { $last: "$market_cap_rank" },
+          price:           { $last: "$price" },
+          market_cap:      { $last: "$market_cap" },
+          volume:          { $last: "$volume" },
+          daily_return:    { $last: "$daily_return" },
+          volatility_7d:   { $last: "$volatility_7d" },
+          // Collect last 7 prices for sparkline
+          allPrices:       { $push: "$price" },
+          allTimestamps:   { $push: "$timestamp" },
+          totalRecords:    { $sum: 1 },
+        }
+      },
+      // Add computed fields
+      {
+        $addFields: {
+          coin_id: "$_id",
+          sparkline: { $slice: ["$allPrices", -7] },
+          // 7-day % change: (last - 7thFromEnd) / 7thFromEnd * 100
+          price_7d_ago: {
+            $arrayElemAt: [
+              "$allPrices",
+              { $max: [0, { $subtract: [{ $size: "$allPrices" }, 8] }] }
+            ]
+          },
+        }
+      },
+      {
+        $addFields: {
+          percentChange7d: {
+            $cond: {
+              if: { $and: [{ $gt: ["$price_7d_ago", 0] }, { $ne: ["$price_7d_ago", null] }] },
+              then: { $multiply: [{ $divide: [{ $subtract: ["$price", "$price_7d_ago"] }, "$price_7d_ago"] }, 100] },
+              else: 0
+            }
+          }
+        }
+      },
+      // Remove heavy arrays from output
+      { $project: { allPrices: 0, allTimestamps: 0, price_7d_ago: 0 } },
+      // Sort by rank
+      { $sort: { market_cap_rank: 1 } },
+    ]);
+
+    res.json({ data, total: data.length });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // HEAD & OPTIONS
 exports.options = (req, res) => {
   res.set("Allow", "GET,POST,HEAD,OPTIONS").status(204).end();

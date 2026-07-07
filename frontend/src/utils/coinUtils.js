@@ -1,16 +1,72 @@
-// Coin brand colors by symbol (extended as needed)
+// Coin brand colors by symbol (extended for 100+ coins)
 export const COIN_COLORS = {
-  BTC:  'bg-orange-500',
-  ETH:  'bg-indigo-500',
-  SOL:  'bg-purple-500',
-  AAVE: 'bg-blue-500',
-  BNB:  'bg-yellow-500',
-  ADA:  'bg-sky-500',
-  XRP:  'bg-blue-700',
-  DOT:  'bg-pink-500',
-  DOGE: 'bg-yellow-400',
-  MATIC:'bg-violet-500',
+  BTC:   'bg-orange-500',
+  ETH:   'bg-indigo-500',
+  SOL:   'bg-purple-500',
+  AAVE:  'bg-blue-500',
+  BNB:   'bg-yellow-500',
+  ADA:   'bg-sky-500',
+  XRP:   'bg-blue-700',
+  DOT:   'bg-pink-500',
+  DOGE:  'bg-yellow-400',
+  MATIC: 'bg-violet-500',
+  USDT:  'bg-green-600',
+  USDC:  'bg-blue-600',
+  LINK:  'bg-blue-400',
+  UNI:   'bg-pink-400',
+  LTC:   'bg-gray-400',
+  AVAX:  'bg-red-500',
+  TRX:   'bg-red-600',
+  SHIB:  'bg-orange-400',
+  ATOM:  'bg-indigo-400',
+  NEAR:  'bg-emerald-500',
+  FIL:   'bg-cyan-500',
+  APT:   'bg-teal-500',
+  ARB:   'bg-blue-400',
+  SUI:   'bg-cyan-400',
+  PEPE:  'bg-green-500',
+  DAI:   'bg-yellow-600',
+  STETH: 'bg-cyan-600',
+  WBTC:  'bg-orange-600',
+  LEO:   'bg-amber-600',
+  OKB:   'bg-blue-500',
+  ETC:   'bg-green-700',
+  KAS:   'bg-teal-600',
+  HBAR:  'bg-gray-600',
+  XLM:   'bg-yellow-300',
+  XMR:   'bg-orange-500',
+  QNT:   'bg-indigo-600',
+  VET:   'bg-blue-500',
+  BCH:   'bg-green-500',
+  HT:    'bg-blue-800',
+  TON:   'bg-sky-600',
+  WLD:   'bg-gray-500',
+  ONDO:  'bg-indigo-500',
+  FLR:   'bg-pink-600',
+  POL:   'bg-purple-600',
+  TAO:   'bg-gray-800',
+  CRO:   'bg-blue-900',
+  MNT:   'bg-slate-500',
+  ZEC:   'bg-amber-500',
+  PI:    'bg-purple-400',
+  TRUMP: 'bg-red-700',
 };
+
+// Helper: get a deterministic color for unknown coins based on symbol hash
+function hashColor(symbol) {
+  const colors = [
+    'bg-rose-500', 'bg-sky-600', 'bg-amber-500', 'bg-emerald-600',
+    'bg-violet-600', 'bg-cyan-600', 'bg-fuchsia-500', 'bg-lime-600',
+    'bg-teal-500', 'bg-indigo-600', 'bg-orange-600', 'bg-pink-600',
+  ];
+  let hash = 0;
+  for (let i = 0; i < symbol.length; i++) hash = hash * 31 + symbol.charCodeAt(i);
+  return colors[Math.abs(hash) % colors.length];
+}
+
+export function getCoinColor(symbol) {
+  return COIN_COLORS[symbol] || hashColor(symbol);
+}
 
 /** Aggregate all records for a coin_id and produce a single summary row */
 export function aggregateCoinRecords(records) {
@@ -39,7 +95,7 @@ export function aggregateCoinRecords(records) {
     rank:            latest.market_cap_rank ?? 999,
     name:            latest.coin_name,
     symbol:          (latest.symbol || '').toUpperCase(),
-    color:           COIN_COLORS[(latest.symbol || '').toUpperCase()] || 'bg-blue-500',
+    color:           getCoinColor((latest.symbol || '').toUpperCase()),
     price:           latest.price ?? 0,
     percentChange1h: 0,                 // not in dataset
     percentChange24h: dailyReturn,

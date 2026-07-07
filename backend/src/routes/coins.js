@@ -7,6 +7,9 @@ const router = express.Router();
 router.options("/", coinsController.options);
 router.head("/", coinsController.head);
 
+// Aggregated summary (one row per coin with sparkline — used by frontend dashboard)
+router.get("/summary", coinsController.getSummary);
+
 // Bulk ops
 router.post("/bulk-create", coinsController.bulkCreate);
 router.patch("/bulk-update", coinsController.bulkUpdate);

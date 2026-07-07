@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import StatCards from '../components/StatCards';
 import FilterRow from '../components/FilterRow';
 import DataTable from '../components/table/DataTable';
 import { fetchCoinSummary } from '../services/api';
@@ -78,7 +77,6 @@ function Home() {
 
   return (
     <div className="w-full">
-      <StatCards coins={coins} loading={loading} />
 
       {error && (
         <div className="bg-red-500/10 border border-red-500/50 text-red-400 text-sm p-4 rounded-lg mb-4">

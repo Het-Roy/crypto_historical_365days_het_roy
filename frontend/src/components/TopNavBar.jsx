@@ -13,8 +13,7 @@ function TopNavBar() {
       <div className="flex items-center gap-6">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 text-textMain font-bold text-lg tracking-tight">
-           <div className="w-6 h-6 rounded-full bg-accentBlue flex items-center justify-center text-white text-xs">C</div>
-           CryptoVault
+           🪙 CryptoVault
         </Link>
       </div>
 
